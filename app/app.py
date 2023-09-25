@@ -157,15 +157,19 @@ def create_hero_power():
     try:
         db.session.add(hero_power)
         db.session.commit()
-        return jsonify({
+        hero_data = {
             "id": hero.id,
             "name": hero.name,
             "super_name": hero.super_name,
-            "powers": [{"id": p.id, "name": p.name, "description": p.description} for p in hero.powers]
-        })
+        }
+        response = make_response(
+            jsonify(hero_data),
+            200
+        )
+        return response  # Correct indentation for returning the response
     except Exception as e:
         db.session.rollback()
         return jsonify({"errors": [str(e)]}), 400
-        
+
 if __name__ == '__main__':
     app.run(port=5555)

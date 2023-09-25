@@ -65,8 +65,14 @@ class HeroPower(db.Model):
     # hero = db.relationship('Power', backref=db.backref('heroes', cascade='all, delete'))
     # powers = db.relationship('Power', backref=db.backref('powers', cascade='all, delete'))
 
+    def __init__(self, strength, hero, power):  # Update the constructor
+        self.strength = strength
+        self.power_id = power.id
+        self.hero_id = hero.id
+
     def __repr__(self):
         return f'<Hero(name={self.name}, super_name={self.super_name})>'
+
     @validates('strength')
     def validate_strength(self, key, value):
         strengths = ['Strong', 'Weak', 'Average']
